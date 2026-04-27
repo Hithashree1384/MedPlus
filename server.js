@@ -23,22 +23,18 @@ const allowedOrigins=[
 
 ]
 
-app.use(cors(
-  {
-    origin:function(origin,callback){
-      if(!origin) return callback(null,true);
-      if(allowedOrigins.includes(origin)){
-        return callback(null,true)
-      }
-      return callback(new Error("Not allowed by cors"))
-    },
-    credentials:true,
-    methods:["GET","POST","PUT","DELETE","OPTIONS"],
-    allowedHeaders:["Content-type","Authorization"]
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
 
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
 
-  }
-));
+    return callback(null, true); // ✅ TEMP FIX (allow all)
+  },
+  credentials: true
+}));
 app.use(bodyParser.json());
 app.use(express.json({limit: '20mb'}))
 app.use(express.urlencoded({limit: '20mb', extended: true}))
